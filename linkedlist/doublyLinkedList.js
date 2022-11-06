@@ -12,6 +12,7 @@ class myDoublyLinkedList {
   }
   prepend(value) {
     let pre = { value: value, next: this.head, prev: null };
+    this.head.prev = pre;
     this.head = pre;
     this.length += 1;
   }
@@ -32,7 +33,8 @@ class myDoublyLinkedList {
           iterator = iterator.next;
         }
         if (i === index) {
-          const newNode = { value: value, next: iterator };
+          const newNode = { value: value, next: iterator, prev: pre };
+          iterator.prev = newNode;
           pre.next = newNode;
           break;
         }
@@ -66,6 +68,8 @@ class myDoublyLinkedList {
         pre.next = iterator.next;
         if (usableIndex === this.length - 1) {
           this.tail = pre;
+        } else {
+          iterator.next.prev = pre;
         }
         break;
       }
@@ -73,7 +77,11 @@ class myDoublyLinkedList {
     this.length--;
   }
 }
+
+// 1-3-10-5
 const doublyList = new myDoublyLinkedList(10);
 doublyList.append(5);
 doublyList.prepend(1);
+doublyList.insert(1, 3);
+doublyList.delete(20);
 console.log(doublyList);
