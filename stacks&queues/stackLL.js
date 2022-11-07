@@ -22,29 +22,22 @@ class Stack {
       this.length++;
       return;
     }
-    this.top.next = newNode;
+    const holder = this.top;
     this.top = newNode;
+    this.top.next = holder;
     this.length++;
   }
   pop() {
+    if (this.length === 0) {
+      return null;
+    }
     if (this.length === 1) {
       this.top = null;
       this.bottom = null;
       this.length--;
       return;
     }
-    let leader;
-    for (let i = 0; i < this.length - 1; i++) {
-      if (i === 0) {
-        leader = this.bottom;
-      } else {
-        leader = leader.next;
-      }
-      if (i === this.length - 2) {
-        leader.next = null;
-        this.top = leader;
-      }
-    }
+    this.top = this.top.next;
     this.length--;
   }
 }
